@@ -1,9 +1,8 @@
-asdf
+MCVE for reproducing 500 error
 ==========
 ## Requirements
 
 * [Docker and Docker Compose](https://docs.docker.com/engine/installation)
-* [MacOS Only]: Docker Sync (run `gem install docker-sync` to install it)
 
 ## Installation
 
@@ -12,36 +11,22 @@ On Linux:
 ```bash
 docker-compose up -d
 ```
-On MacOS:
-```bash
-docker-sync-stack start
-```
 ### 2. Install vendors
 ```bash
 docker-compose exec php composer install
 ```
-### 3. Run migrations, install fixtures
+### 3. Update .env:
 ```bash
-docker-compose exec php bin/console doctrine:migrations:migrate
-docker-compose exec php bin/console doctrine:fixtures:load --append
+cp .env.dist .env
 ```
+And fill .env with correct data
 
-### 4. Generate the SSH keys for JWT: 
+##Testing the 500 bug
+### 1.Enter the php container
 ```bash
-mkdir -p var/jwt
-openssl genrsa -out var/jwt/private.pem -aes256 4096
-openssl rsa -pubout -in var/jwt/private.pem -out var/jwt/public.pem
+docker-compose exec php bash
 ```
-
-### 5. Update .env:
-- Insert pass phrase - JWT_PASSPHRASE  
-- Insert omdb api key(get it [here](http://www.omdbapi.com/). Only if you need corresponding functionality ) - OMDB_API_KEY
-
-### 5. Open project
-Just go to [http://localhost](http://localhost)
-
-####Run tests:
+### 2. Run the run.php file
 ```bash
-APP_ENV=test vendor/bin/behat; #Behat
-APP_ENV=test vendor/bin/phpunit -d memory_limit=-1 #Phpunit
+php -f run.php
 ```
