@@ -1,0 +1,16 @@
+version: '3.2'
+
+services:
+    php:
+        build: ./docker
+        volumes:
+            - .:/var/www/html
+            - trash:/var/www/
+        expose:
+            - 9000
+        env_file:
+          - .env
+        entrypoint:
+          - "./docker/docker-entrypoint.sh"
+volumes:
+    trash:

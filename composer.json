@@ -1,0 +1,8 @@
+{
+    "type": "project",
+    "license": "proprietary",
+    "require": {
+        "php": "^7.2",
+        "kreait/firebase-php": "^4"
+    }
+}
