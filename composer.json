@@ -1,8 +1,15 @@
 {
     "type": "project",
     "license": "proprietary",
+    "autoload": {
+        "classmap": [
+            "src/DebugFactory.php"
+        ]
+    },
     "require": {
         "php": "^7.2",
-        "kreait/firebase-php": "^4"
+        "kreait/firebase-php": "^4",
+        "ext-json": "*",
+        "namshi/cuzzle": "^2.0"
     }
 }

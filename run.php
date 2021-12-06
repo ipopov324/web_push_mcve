@@ -3,16 +3,12 @@
 use Kreait\Firebase\Factory;
 use Kreait\Firebase\Messaging\CloudMessage;
 
-
 require __DIR__ . '/vendor/autoload.php';
-
-echo 'tst';
 
 $serviceAccount =
     (new Kreait\Firebase\ServiceAccount())
         ->withClientId(getenv('CLIENT_ID'))
         ->withPrivateKey(getenv('PRIVATE_KEY'))
-//        ->withPrivateKey("")
         ->withProjectId(getenv('PROJECT_ID'))
         ->withClientEmail(getenv('CLIENT_EMAIL'));
 
@@ -21,13 +17,12 @@ $factory = (new Factory())->withServiceAccount($serviceAccount);
 $messaging = $factory->create()->getMessaging();
 
 $notification = [
-    'title' => 'test_subject',
-    'body' => 'test body',
+    'title' => 'Your withdrawal has been completed"',
+    'body' => "Check your Transaction History in our app for more details.",
 ];
 
-$tokens = [
-
-];
+$rawTokens = file_get_contents("tokens.json");
+$tokens = json_decode($rawTokens, true);
 
 foreach ($tokens as $token) {
     $message = CloudMessage::fromArray([
@@ -42,8 +37,7 @@ foreach ($tokens as $token) {
 
     try {
         $response = $messaging->send($message);
-        var_dump($response);
-    }catch (\Throwable $e) {
-        echo $e->getMessage(). ' token: '.$token;
+    } catch (\Throwable $e) {
+        echo $e->getCode() . $e->getMessage() ; //. ' token: '. $token;
     }
 }

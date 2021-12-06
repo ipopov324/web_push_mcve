@@ -21,6 +21,8 @@ cp .env.dist .env
 ```
 And fill .env with correct data
 
+### 3. Fill the tokens.json file:
+
 ##Testing the 500 bug
 ### 1.Enter the php container
 ```bash
